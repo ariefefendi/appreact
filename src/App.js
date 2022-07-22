@@ -1,14 +1,11 @@
 // NOTE :
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-// import ReactDOM from 'react-dom'
-// import DataTable from 'react-data-table-component';
 // import helpers from './components/helpers';
 // Tab fitur.
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-// button
-import Button from 'react-bootstrap/Button';
+// react-bootstrap
+import {Button, Form, Tab, Tabs} from 'react-bootstrap';
+import swal from 'sweetalert';
 
 //jQuery libraries
 import 'jquery/dist/jquery.min.js';
@@ -32,14 +29,62 @@ function App() {
   const goBack = (key) => {
     setMode(key);
     setUpdate(false);
+    setDataModelUpdate([]);
+    console.log("Processing : "+processing);
+    console.log("mode : "+mode+", Mode_update : "+update);
+
   }
 
   // function select
   const selectId = (result) => {
+    modeProcessing(true);
     setMode('form');
     setUpdate(true);
     setDataModelUpdate(result);
     console.log(result);
+    console.log("getdataId : "+result.id);
+    console.log("Processing : "+processing);
+    console.log("mode : "+mode+", Mode_update : "+update);
+    modeProcessing(false);
+  }
+  // function deleteId
+  const deleteId = (result) => {
+    modeProcessing(true);
+    setMode('list');
+    setUpdate(false);
+
+        swal({
+          title: "Are you sure?",
+          text: "Data "+result.name+" Once deleted!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+
+
+            console.log(result);
+            console.log("getdataId : "+result.id);
+            console.log("Processing : "+processing);
+            console.log("mode : "+mode+", Mode_update : "+update);
+
+            swal("Poof! Your imaginary file has been deleted!", {
+              icon: "success",
+            });
+
+
+
+
+          } else {
+            goBack()
+            console.log("cancel deleting!");
+          }
+        });
+
+
+
+    modeProcessing(false);
   }
   // button mode Update
   const ButtonMode = () => {
@@ -69,6 +114,7 @@ function App() {
 
       // add custom class
       $(".tab-content").addClass('px-0');
+      $(".dataTables_filter ").addClass('pb-2');
 
       //initialize datatable
       $(document).ready(function () {
@@ -98,10 +144,30 @@ function App() {
                   <h3>Form add new same data </h3>
                     <div>
                         { <ButtonMode /> }
-                        <br/>
-                        <span className="outline-info">{dataModelUpdate.id}</span><br/>
-                        <span className="outline-info">{dataModelUpdate.email}</span><br/>
-                        <span className="outline-info">{dataModelUpdate.website}</span>
+
+                        <div>
+                        <span className="outline-info">{dataModelUpdate.id}</span>
+
+                        <Form.Group className="mb-3">
+                          <Form.Label>Name : </Form.Label>
+                          <Form.Control placeholder="Name here"
+                          value={ update ? dataModelUpdate.name : "" } />
+                        </Form.Group>
+
+                         <Form.Group className="mb-3">
+                           <Form.Label>Email : </Form.Label>
+                           <Form.Control placeholder="Email here"
+                           value={ update ? dataModelUpdate.email : "" } />
+                         </Form.Group>
+
+                         <Form.Group className="mb-3">
+                           <Form.Label>Website : </Form.Label>
+                           <Form.Control placeholder="Site Url here"
+                           value={ update ? dataModelUpdate.website : "" } />
+                         </Form.Group>
+
+                       </div>
+
                     </div>
                 </div>
               </Tab>
@@ -117,7 +183,8 @@ function App() {
                           <th>ID</th>
                           <th>Username</th>
                           <th>Email</th>
-                          <th>Action</th>
+                          <th>-</th>
+                          <th>-</th>
                       </tr>
                     </thead>
                         <tbody>
@@ -128,8 +195,10 @@ function App() {
                                 <td>{result.id}</td>
                                 <td>{result.username}</td>
                                 <td>{result.email}</td>
+                                <td><Button type="button" onClick={(key) => selectId(result)} variant="outline-secondary" className="me-1">Edit</Button>
+                                </td>
                                 <td>
-                                <><Button type="button" onClick={(key) => selectId(result)} variant="outline-secondary">Edit</Button></>
+                                <Button type="button" onClick={(key) => deleteId(result)} variant="outline-danger">Delete</Button>
                                 </td>
                             </tr>
                           )

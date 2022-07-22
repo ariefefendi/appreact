@@ -25,3 +25,5 @@ npm install react-bootstrap bootstrap
 npm install --save datatables.net-dt
 
 npm install jquery --save
+
+npm install sweetalert --save
