@@ -9,9 +9,8 @@ import {Button, Form, Tab, Tabs} from 'react-bootstrap';
 import swal from 'sweetalert';
 
 import DataTable from 'react-data-table-component';
-import helpers from './components/helpers';
+import helpers from '../components/helpers';
 import $ from 'jquery';
-
 
 function App() {
   const [dataModel, setDataModel] = useState([])

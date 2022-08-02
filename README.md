@@ -27,3 +27,6 @@ npm install --save datatables.net-dt
 npm install jquery --save
 
 npm install sweetalert --save
+
+## for uninstall.
+npm uninstall <package_name>
