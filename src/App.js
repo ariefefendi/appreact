@@ -12,7 +12,6 @@ import DataTable from 'react-data-table-component';
 import helpers from './components/helpers';
 import $ from 'jquery';
 
-
 function App() {
   const [dataModel, setDataModel] = useState([])
   const [dataModelUpdate, setDataModelUpdate] = useState([]);

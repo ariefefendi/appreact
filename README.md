@@ -28,5 +28,13 @@ npm install jquery --save
 
 npm install sweetalert --save
 
+npm i @rehooks/local-storage --save   ( for uselocalstorage )
+ - import { writeStorage, deleteFromStorage, useLocalStorage } from '@rehooks/local-storage';
+ https://www.npmjs.com/package/@rehooks/local-storage
+
+<!-- react-router-dom -->
+npm add react-router-dom
+https://v5.reactrouter.com/web/api/Hooks/usehistory
+
 ## for uninstall.
 npm uninstall <package_name>

@@ -13,14 +13,15 @@ import helpers from '../components/helpers';
 import $ from 'jquery';
 
 function App() {
+
   const [dataModel, setDataModel] = useState([])
-  const [dataModelUpdate, setDataModelUpdate] = useState([]);
+  const [dataModelUpdate, setDataModelUpdate] = useState([])
   const [processing, modeProcessing] = useState(false)
   const [search, setSearch] = useState("")
   const [toggleCleared, setToggleCleared] = React.useState(false)
   const [selectedRows, setSelectedRows] = React.useState([])
   const [mode, setMode] = useState('form')
-  const [update, setUpdate] = useState(false);
+  const [update, setUpdate] = useState(false)
 
   const [title, setTitle] = useState("List data Pengguna")
 
@@ -39,8 +40,8 @@ function App() {
     setMode('list')
     setupTitle(update)
     console.log(mode)
-    setUpdate(false);
-    setDataModelUpdate([]);
+    setUpdate(false)
+    setDataModelUpdate([])
     console.log(" ========== ");
     console.log("mode : "+mode+", Mode_update : "+update);
   }
@@ -71,6 +72,7 @@ function App() {
     const res = await axios.get(`https://aplikasi.whusnet.com/contoh/ApiContoh/getallpengguna`)
       console.log(res.data)
       setDataModel(res.data.Data)
+      setSelectedRows(res.data.Data)
       setDataModelUpdate(res.data.Data)
       modeProcessing(false)
     };
@@ -84,10 +86,10 @@ function App() {
     // action for delete.
     const contextActions = React.useMemo((result) => {
       const handleDelete = () => {
-        if (window.confirm(`Are you sure you want to delete:\r ${selectedRows.map(row => selectedRows.NAMADEPAN)}?`)) {
-          console.log(selectedRows);
+        if (window.confirm(`\r ${selectedRows.length} items selected. Are you sure you want to delete it?`)) {
           setToggleCleared(!toggleCleared);
-          setDataModel(dataModel, selectedRows, 'numberCode');
+          setSelectedRows(dataModel, selectedRows, 'IDPENGGUNA');
+          console.log(selectedRows);
         }
       };
       return (
@@ -219,7 +221,7 @@ function App() {
       <Form.Control placeholder="Numeric Code here" disabled
       type="text"
       value={ update ? dataModelUpdate.IDPENGGUNA : IDPENGGUNA }
-      onChange={(e) => setIDPENGGUNA(e.target.value)} />
+      onChange={(e) => IDPENGGUNA(e.target.value)} />
       </Form.Group>
 
       <Form.Group className="mb-3">
@@ -227,22 +229,21 @@ function App() {
       <Form.Control placeholder="Name here"
       type="text"
       value={ update ? dataModelUpdate.NAMADEPAN : NAMADEPAN }
-      onChange={(e) => setNAMADEPAN(e.target.value)} />
+      onChange={(e) => NAMADEPAN(e.target.value)} />
       </Form.Group>
-
 
       <Form.Group className="mb-3">
       <Form.Label>KEC : </Form.Label>
       <Form.Control placeholder="Population here"
       value={ update ? dataModelUpdate.KEC : KEC }
-      onChange={(e) => setKEC(e.target.value)} />
+      onChange={(e) => KEC(e.target.value)} />
       </Form.Group>
 
       <Form.Group className="mb-3">
       <Form.Label>HP : </Form.Label>
       <Form.Control placeholder="Region here"
       value={ update ? dataModelUpdate.HP : HP }
-      onChange={(e) => setHP(e.target.value)} />
+      onChange={(e) => HP(e.target.value)} />
       </Form.Group>
 
       <Form.Group className="mb-3">
